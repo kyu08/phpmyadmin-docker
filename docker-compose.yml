@@ -2,13 +2,14 @@ version: '3'
 
 services:
   mysqldb:
+    platform: linux/x86_64
     image: mysql:5.7
     container_name: mysql57_container
     environment:
-      MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: my_testdb
-      MYSQL_USER: hiro
-      MYSQL_PASSWORD: hiropasswd
+      MYSQL_ROOT_PASSWORD: pass
+      MYSQL_DATABASE: mydb
+      MYSQL_USER: kyu08
+      MYSQL_PASSWORD: pass
       TZ: 'Asia/Tokyo'
     volumes:
       - ./docker/db/data:/var/lib/mysql  
