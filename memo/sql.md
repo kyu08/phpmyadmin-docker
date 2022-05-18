@@ -26,3 +26,18 @@ from hoge
 ```sql
 select distinct team_id from member;
 ```
+
+# 比較演算子
+NULL を含んだ計算の結果はすべて NULL になるので注意
+```sql
+select id from member where team_id = null
+```
+
+とかやっても何もとれない
+null 判定したい場合は `is null` とか `is not null` とかをつかう
+
+# null を含む場合の真理値
+null を含む真理値は `UNKNOWN` になる。
+通常の論理演算が2値論理と呼ばれるのに対し、SQLでの論理演算は3値演算と呼ばれる
+
+
