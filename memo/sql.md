@@ -55,17 +55,3 @@ where (shohin_bunrui = '事務用品' OR shohin_bunrui = 'キッチン用品')
 # HAVING
 GROUP BY で集約したデータに対して条件を指定する
 
-3.1
-shohin_mei は文字列型なので SUM できない
-WHERE は GROUP BY よりも前にかこう
-
-3.2
-SELECT shohin_bunrui, sum(hanbai_tanka), sum(shiire_tanka)
-FROM `Shohin`
-GROUP BY shohin_bunrui
-HAVING sum(hanbai_tanka) > 1.5 * sum(shiire_tanka);
-
-3.3 
-ORDER BY shiire_tanka, torokubi DESC
-
-
