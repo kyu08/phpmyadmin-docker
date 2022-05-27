@@ -55,3 +55,7 @@ where (shohin_bunrui = '事務用品' OR shohin_bunrui = 'キッチン用品')
 # HAVING
 GROUP BY で集約したデータに対して条件を指定する
 
+# ビュー
+- ビューの実態は SELECT文
+- ビューには「ORDER BY句は使えない」「ビューに対する更新は不可能ではないが制限がある」という2つの制限がある
+
