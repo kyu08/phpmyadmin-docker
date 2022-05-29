@@ -65,3 +65,61 @@ GROUP BY で集約したデータに対して条件を指定する
     ②その結果に対してビューを FROM句 に指定した SELECT文 が実行される
   ためパフォーマンスが悪いから
 
+# サブクエリ
+- 使い捨てのビューのようなもの。ビューとは異なり、 SELECT文 の実行終了後に消去される
+- サブクエリには名前をつける必要がある
+- スカラ・サブクエリとは、必ず1行1列だけの結果を返すという制限をつけたサブクエリのこと
+
+- 以下のように FROM句 の中に SELECT文 を書く
+- AS は省略可能
+```sql
+SELECT id, count
+  FROM (SELECT id, COUNT(*) as count
+    FROM Shohin
+    GROUP BY shohin_bunrui) AS ShohinSum;
+```
+
+## スカラ・サブクエリ
+WHERE句 の中では集約関数が使えない。ではAVGやSUMの結果を WHERE句 の中で使いたい場合はどうすればいいか
+
+```sql
+SELECT id, tanka
+FROM shohin
+-- WHERE句 の中では集約関数は使えないためエラー
+WHERE tanka > AVG(tanka);
+```
+
+そんなときはスカラ・サブクエリを利用する
+```sql
+SELECT id, tanka
+FROM shohin
+-- 平均単価を求めるスカラ・サブクエリ
+WHERE tanka > (SELECT AVG(tanka) FROM shohin);
+```
+
+## なんでWHERE句のなかで集約関数が使えないのか
+https://qiita.com/k_0120/items/a27ea1fc3b9bddc77fa1
+SQLの実行順は次のようになっている
+```
+FROM句
+↓
+JOIN句
+↓
+**WHERE句**
+↓
+**GROUP BY句**
+↓
+HAVING句
+↓
+SELECT句
+↓
+ORDER BY句
+↓
+LIMIT句
+```
+そもそも、グループ化されたデータに対して処理をかけて1つの値にまとめる関数を集約関数とよぶ
+GROUP BY句 よりも WHERE句 が先に実行される、つまり WHERE句 が実行されるタイミングではまだグループ化は行われていない。
+よって GROUP BY句 が実行されるよりも前に集約関数を使うことができない
+
+## スカラ・サブクエリ をかける場所
+- スカラ・サブクエリは基本的にはスカラ値をかけるところにはどこでもかける。
