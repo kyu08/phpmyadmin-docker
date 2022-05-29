@@ -129,3 +129,28 @@ GROUP BY句 よりも WHERE句 が先に実行される、つまり WHERE句 が
 - GROUP BY と同じく相関サブクエリも集合の「カット」という機能を持っている
 - 相関サブクエリの結合条件はサブクエリの中に書かないとエラーになってしまう
 
+- GROUP BY でカットしたグループごとに集計を適用し、その結果を WHERE句に使いたい場合につかったりする。
+
+## 具体的な例
+その商品分類の販売単価よりも高い販売単価の商品を出力したい際に
+```sql
+select id, hanbai_tanka
+from shohin
+where hanbai_tanka > (select AVG(hanbai_tanka)
+  from shohin
+  group by shohin_bunrui);
+```
+
+とするとエラーになる。(スカラサブクエリを書くべきところに、3行の結果を返すクエリを記述してしまっているため)
+相関サブクエリを使うとうまくかける
+
+```sql
+select id, hanbai_tanka
+from shohin as s1
+where hanbai_tanka > (select AVG(hanbai_tanka)
+  from shohin as s2
+  where s1.shohin_bunrui = s2.shohin_bunrui
+  group by shohin_bunrui);
+```
+
+このように、相関サブクエリはテーブル全体ではなく、テーブルの一部のレコード集合に限定した比較をしたいときに使う
