@@ -171,3 +171,21 @@ NULL を引数にとると NULL を返す
 ```sql
 select COALESCE(str2, 'NULLだよ') from SampleStr;
 ```
+
+# 述語
+- 述語とは、戻り値が真理値になる関数のこと
+
+## LIKE述語
+- 部分一致検索(前方一致、中間一致、後方一致)を行うことができる
+
+前方一致はこう書く
+```sql
+select str
+from tableName
+where str LIKE 'hoge%';
+```
+中間一致: `'%hoge%'`
+後方一致: `'%hoge'`
+
+`%` は0文字以上の任意の文字列を表す
+`_` は任意の1文字を表す
