@@ -248,6 +248,7 @@ where EXISTS (
 # CASE式
 - CASE式には単純CASE式と検索CASE式の2種類がある。検索CASE式は単純CASE式の機能をすべて含む
 - 条件分岐を記述することができる
+MySQL だと `||` で文字列結合ができないので注意(`CONCAT('a', 'b')`のようにかく)
 - 
 
 CASE式が書ける場所 から
