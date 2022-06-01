@@ -175,7 +175,7 @@ select COALESCE(str2, 'NULLだよ') from SampleStr;
 # 述語
 - 述語とは、戻り値が真理値になる関数のこと
 
-## LIKE述語
+## LIKE
 - 部分一致検索(前方一致、中間一致、後方一致)を行うことができる
 
 前方一致はこう書く
@@ -190,9 +190,57 @@ where str LIKE 'hoge%';
 `%` は0文字以上の任意の文字列を表す
 `_` は任意の1文字を表す
 
-## BETWEEN述語
+## BETWEEN
 - 範囲検索を行うことができる
 - `WHERE col BETWEEN 10 AND 20` と書いた場合、10"以上"20"以下"の値が返される(両端の値を含むことに注意する)
 
+## IN
+- 同一のカラムに対する `OR` 条件がたくさんある場合、`IN` を使うとスッキリかける
 
+```sql
+select id, age
+from user
+where age = 19
+  or age = 20
+  or age = 21;
+```
+これを `IN` を使って書き直すとこう書ける
 
+```sql
+select id, age
+from user
+where age IN (19, 20, 21);
+```
+
+- 含まない行を検索したい場合は `NOT IN` を使う
+
+### IN の引数にサブクエリを指定する
+IN の引数には以下のようにサブクエリを指定することができる
+where句の条件を動的に変えたい場合はこの方法を使うのがよさそう
+
+```sql
+select shohin_id, hanbai_tanka
+from shohin
+where shohin_id IN (
+  select shohin_id
+  from tenposhohin
+  where tenpo_id = '000c'
+);
+```
+
+## EXISTS
+- 基本的には `IN` で書き換えることができる
+- `IN` の方が直感的なので `IN` で代用できる場面ではそうする方がわかりやすいことが多い
+
+↑の select文を `EXISTS` を使って書き換えると以下のようになる
+
+```sql
+select shohin_id, hanbai_tanka
+from shohin as s
+where EXISTS (
+  select *
+  from tenposhohin as t
+  where tenpo_id = '000c'
+  AND t.shohin_id = s.shohin_id
+);
+```
