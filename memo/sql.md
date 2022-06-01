@@ -244,3 +244,16 @@ where EXISTS (
   AND t.shohin_id = s.shohin_id
 );
 ```
+
+# CASE式
+- CASE式には単純CASE式と検索CASE式の2種類がある。検索CASE式は単純CASE式の機能をすべて含む
+- 条件分岐を記述することができる
+- 
+
+CASE式が書ける場所 から
+CASE式が書ける場所 から
+CASE式が書ける場所 から
+CASE式が書ける場所 から
+CASE式が書ける場所 から
+CASE式が書ける場所 から
+
