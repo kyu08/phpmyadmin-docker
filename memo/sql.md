@@ -248,13 +248,33 @@ where EXISTS (
 # CASE式
 - CASE式には単純CASE式と検索CASE式の2種類がある。検索CASE式は単純CASE式の機能をすべて含む
 - 条件分岐を記述することができる
-MySQL だと `||` で文字列結合ができないので注意(`CONCAT('a', 'b')`のようにかく)
-- 
+- (MySQL だと `||` で文字列結合ができないので注意(`CONCAT('a', 'b')`のようにかく))
 
-CASE式が書ける場所 から
-CASE式が書ける場所 から
-CASE式が書ける場所 から
-CASE式が書ける場所 から
-CASE式が書ける場所 から
-CASE式が書ける場所 から
+## CASE式による行列変換
+```sql
+select 
+  (SUM(
+    CASE
+      WHEN shohin_bunrui = '衣服' 
+      THEN hanbai_tanka
+      ELSE 0
+      END
+  )) as sum_a,
+  (SUM(
+    CASE
+      WHEN shohin_bunrui = 'キッチン用品' 
+      THEN hanbai_tanka
+      ELSE 0
+      END
+  )) as sum_b
+from
+  Shohin;
+```
+
+| sum_tanka_ihuku | sum_tanka_kitchen | sum_tanka_jimu |
+|---|---|---|
+| 5000 | 11180 |600 |
+
+## 検索CASE式 と 単純CASE式 の違い
+
 
