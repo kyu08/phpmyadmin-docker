@@ -272,7 +272,7 @@ from
 ```
 
 | sum_tanka_ihuku | sum_tanka_kitchen | sum_tanka_jimu |
-|---|---|---|
+|:-:|:-:|:-:|
 | 5000 | 11180 |600 |
 
 ## 検索CASE式 と 単純CASE式 の違い
