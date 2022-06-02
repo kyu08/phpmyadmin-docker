@@ -276,5 +276,31 @@ from
 | 5000 | 11180 |600 |
 
 ## 検索CASE式 と 単純CASE式 の違い
+単純CASE式は比較対象が固定される
+読みやすいし記述量も少ないのでできるだけ単純CASE式を使うのがよさそうなきがする
+
+```sql
+-- 検索CASE式
+select 
+    CASE
+      WHEN shohin_bunrui = '衣服' THEN CONCAT('A: ', shohin_mei)
+      WHEN shohin_bunrui = 'キッチン用品' THEN CONCAT('B: ', shohin_mei)
+      WHEN shohin_bunrui = '事務用品' THEN CONCAT('C: ', shohin_mei)
+      ELSE 0
+      END
+from
+  Shohin;
+
+-- 単純CASE式
+select 
+    CASE shohin_bunrui
+      WHEN '衣服' THEN CONCAT('A: ', shohin_mei)
+      WHEN 'キッチン用品' THEN CONCAT('B: ', shohin_mei)
+      WHEN '事務用品' THEN CONCAT('C: ', shohin_mei)
+      ELSE NULL
+      END
+from
+  Shohin;
+```
 
 
