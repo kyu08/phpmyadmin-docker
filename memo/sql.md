@@ -306,3 +306,23 @@ from
 ## NOT IN で指定したリストやサブクエリーの値に NULL が存在すると、常に空の結果セットが返ってくる
 理由は NOT IN で指定された全てと合致しない行のみが返されるが、 NULL との比較は常にUnknown が返るため
 
+# テーブルの足し算と引き算
+- 集合演算子は重複行を削除する(ALL オプションをつけた時を除く)
+
+## 集合演算の注意事項
+- 演算対象となるレコードの列数は同じであること
+- 演算対象となるレコードの型が一致していること
+- order by は最後に1つしかつけられない
+
+## テーブルの共通部分の選択 INTERSECT
+- mysql ではサポートされていない
+
+```sql
+SELECT shohin_id, shohin_mei
+  FROM Shohin
+INTERSECT
+SELECT shohin_id, shohin_mei
+  FROM Shohin2
+ORDER BY shohin_id;
+```
+
