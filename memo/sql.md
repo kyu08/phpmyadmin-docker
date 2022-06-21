@@ -326,3 +326,13 @@ SELECT shohin_id, shohin_mei
 ORDER BY shohin_id;
 ```
 
+# テーブルの結合
+## INNER JOIN
+一致したレコードだけ出力する
+
+## OUTER JOIN
+どちらかのテーブルに値が存在していれば出力する
+
+## CROSS JOIN
+直積
+すべての列の掛け合わせ
