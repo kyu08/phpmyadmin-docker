@@ -339,3 +339,32 @@ ORDER BY shohin_id;
 
 # ウィンドウ関数
 - 範囲を区切って集約関数やウィンドウ専用関数を適用すること
+
+## GROUPING 演算子
+`GROUP BY`をただ使うだけでは `GROUP BY` で区切った範囲ごとにしか処理を行うことができなかったが、`ROLLUP` を用いると集約キーの組み合わせが異なる結果を一度に計算することができる
+このケースだと、
+- GROUP BY()
+- GROUP BY(shohin_bunrui)
+の2つの組み合わせについての集約を一度に計算している
+
+```sql
+SELECT shohin_bunrui, SUM(hanbai_tanka) AS sum_tanka
+  FROM Shohin
+ GROUP BY shohin_bunrui WITH ROLLUP;
+```
+
+| shohin_bunrui | sum_tanka |
+|:-:|:-:|:-:|
+|  | 16780 |
+| キッチン用品 | 11180 |
+| 事務用品 | 600 |
+| 衣服 | 5000 |
+
+### 超集合行とは
+- GROUP BY() で集計した際のケース(全体の合計行とか)のレコードを`超集計行`とよぶ
+- 超集計行はデフォルトで集約キー列が NULL になる。なので GROUPING関数 を使いたいケースがでてくる
+
+## GROUPING関数
+- 超集計行とNULLの項目を集約した結果行を見分ける際に利用する
+- 引数にとった列が超集合行のために生じたNULLであれば1を、それ以外の場合に0を返す
+
