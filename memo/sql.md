@@ -367,4 +367,3 @@ SELECT shohin_bunrui, SUM(hanbai_tanka) AS sum_tanka
 ## GROUPING関数
 - 超集計行とNULLの項目を集約した結果行を見分ける際に利用する
 - 引数にとった列が超集合行のために生じたNULLであれば1を、それ以外の場合に0を返す
-
